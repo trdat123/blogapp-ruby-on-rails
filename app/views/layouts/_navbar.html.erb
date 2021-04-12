@@ -1,0 +1,59 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+        <a class="navbar-brand">
+            <%= image_tag "favicon.ico" %>
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <% if user_signed_in? %>
+                <form class="d-flex">
+                    <input class="form-control rounded-pill bg-light" type="search" placeholder="Search something..." aria-label="Search">
+                </form>
+            
+                <ul class="navbar-nav mx-auto position-absolute top-50 start-50 translate-middle">
+                    <li class="nav-item" id="nav-icon">
+                        <%= link_to root_path do %>
+                            <%= image_tag "home-fav.ico", class:"nav-link active" %>
+                        <% end %>
+                    </li>
+                    <li class="nav-item" id="nav-icon">
+                        <%= link_to blogs_path do %>
+                            <%= image_tag "book-fav.ico", class:"nav-link active" %>
+                        <% end %>
+                    </li>
+                </ul>
+
+                <div class="dropdown ms-auto">
+                    <button class="btn btn-light rounded-circle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-caret-down-fill"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <h1 class="dropdown-header fs-4"><%= current_user.email %></h1>
+                        </li>
+                        <li>
+                            <%= link_to "Edit Profile", edit_user_registration_path, class:"dropdown-item" %>
+                        </li>
+                        <li>
+                            <%= link_to "Change Password", edit_user_password_path, class:"dropdown-item" %>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider"></li>
+                        <li>
+                            <%= link_to "Sign out", destroy_user_session_path, class:"dropdown-item" %>
+                        </li>
+                    </ul>
+                </div>
+            <% else %>
+                <div class="button-group ms-auto">
+                    <%= link_to "Sign in", new_user_session_path, class:"btn btn-success mr-3" %>
+                    <%= link_to "Sign up", new_user_registration_path, class:"btn btn-outline-success mr-3" %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</nav>
