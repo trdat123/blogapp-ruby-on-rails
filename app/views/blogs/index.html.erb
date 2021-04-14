@@ -1,12 +1,20 @@
-<h1>Blogs</h1>
+<div class="card m-3 mx-auto" id="blog-card">
+        <div class="card-body">
+            <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Post something" data-bs-toggle="modal" data-bs-target="#createBlogModal">
+        </div>
+
+        <div class="card-footer">
+            posting picture feature goes here
+        </div>
+    </div>
 
 <% @blogs.each do |blog| %>
-    <div class="card mb-3 mx-auto">
+    <div class="card m-3 mx-auto" id="blog-card">
         <div class="card-header d-flex">
-            Poster goes here
+            <p class="fw-bolder"><%= blog.user.email %></p>
             <div class="dropdown d-inline-flex ms-auto">
                  <button class="btn btn-light" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-three-dots"></i>
+                       <i class="bi bi-three-dots"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
                     <li>
@@ -36,22 +44,20 @@
 
 <%= link_to 'New Blog', new_blog_path %>
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Post something
-</button>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="createBlogModal" tabindex="-1" aria-labelledby="createBlogModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <%= form_for( @blog , remote: true, html: { class: "modal-content", role: "form" }, url: blogs_path) do |f| %>
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create a blog</h5>
+                <h5 class="modal-title" id="createBlogModalLabel">Create a blog</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">  
                 <%= f.text_area :blog_text, class:"form-control" %>
             </div>
             <div class="modal-footer">
-                <%= f.submit %>
+                <div class="action">
+                    <%= f.submit %>
+                </div>
             </div>
         <% end %>
     </div>
