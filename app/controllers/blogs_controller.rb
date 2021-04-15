@@ -1,5 +1,6 @@
 class BlogsController < ApplicationController
     before_action :set_blog, only: %i[ show edit update destroy ]
+    before_action :correct_user, only: %i[ show edit update destroy ]
     skip_before_action :verify_authenticity_token
 
     # GET /blogs or /blogs.json
@@ -27,26 +28,26 @@ class BlogsController < ApplicationController
         @blog.user = current_user
 
         respond_to do |format|
-        if @blog.save
-            format.html { redirect_to index, notice: "Blog was successfully created." }
-            format.json { render :show, status: :created, location: index }
-        else
-            format.html { render :new, status: :unprocessable_entity }
-            format.json { render json: @blog.errors, status: :unprocessable_entity }
-        end
+            if @blog.save
+                format.html { redirect_to index, notice: "Blog was successfully created." }
+                format.json { render :show, status: :created, location: index }
+            else
+                format.html { render :new, status: :unprocessable_entity }
+                format.json { render json: @blog.errors, status: :unprocessable_entity }
+            end
         end
     end
 
     # PATCH/PUT /blogs/1 or /blogs/1.json
     def update
         respond_to do |format|
-        if @blog.update(blog_params)
-            format.html { redirect_to @blog, notice: "Blog was successfully updated." }
-            format.json { render :show, status: :ok, location: @blog }
-        else
-            format.html { render :edit, status: :unprocessable_entity }
-            format.json { render json: @blog.errors, status: :unprocessable_entity }
-        end
+            if @blog.update(blog_params)
+                format.html { redirect_to @blog, notice: "Blog was successfully updated." }
+                format.json { render :show, status: :ok, location: @blog }
+            else
+                format.html { render :edit, status: :unprocessable_entity }
+                format.json { render json: @blog.errors, status: :unprocessable_entity }
+            end
         end
     end
 
@@ -59,14 +60,20 @@ class BlogsController < ApplicationController
         end
     end
 
+    def correct_user
+        @blog = current_user.blogs.find_by(id: params[:id])
+        redirect_to blogs_path if @blog.nil?
+    end
+    
+
     private
         # Use callbacks to share common setup or constraints between actions.
         def set_blog
-        @blog = Blog.find(params[:id])
+            @blog = Blog.find(params[:id])
         end
 
         # Only allow a list of trusted parameters through.
         def blog_params
-        params.require(:blog).permit(:blog_text)
+            params.require(:blog).permit(:blog_text)
         end
 end
