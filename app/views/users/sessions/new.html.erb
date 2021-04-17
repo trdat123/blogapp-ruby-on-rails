@@ -1,7 +1,7 @@
 <div class="home-page">
     <div class="d-flex flex-row">
         <div class="d-flex flex-column mr-5 mt-5">
-            <h1 class="display-3 fw-bold">Blog App</h1>
+            <h1 class="display-3 fw-bold" id="app-title">Blog App</h1>
             <p class="fs-3">Blog App helps you connect and share with the people in your life.</p>
         </div>
 
@@ -26,53 +26,8 @@
             </div>
 
             <div class="card-footer">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signUpModal">
-                    Create New Account
-                </button>
+                <%= link_to "Create New Account", new_user_registration_path, class:"btn btn-primary" %>
             </div>
         </div>
     </div>    
-</div>
-
-
-<div class="modal" id="signUpModal" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="false">
-  <div class="modal-dialog modal-dialog-centered" id="signUpModal1">
-        <div class="modal-content">
-            <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-                <div class="modal-header">
-                    <div class="d-flex flex-column">
-                        <h3 class="modal-title" id="signUpModalLabel">Sign Up</h3>
-                        <p class="modal-title" id="signUpModalLabel">Fast and easy</p>
-                    </div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-body"> 
-                    <div class="form-group">
-                        <%= f.text_field :username, autofocus: true, autocomplete: "username", class:"form-control bg-light mb-2", placeholder:"Your username" %>
-                    </div>
-                    
-                    <div class="form-group">
-                        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control bg-light mb-2", placeholder:"E-mail" %>
-                    </div>
-
-                    <div class="form-group">
-                        <% if @minimum_password_length %>
-                            <em>(<%= @minimum_password_length %> characters minimum)</em>
-                        <% end %>
-                        <%= f.password_field :password, autocomplete: "new-password", class:"form-control bg-light mb-2", placeholder:"New password" %>
-                    </div>
-
-                    <div class="form-group">
-                        <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control bg-light mb-2", placeholder:"Retype new password" %>
-                    </div>                 
-                    <p id="policy">By clicking Sign Up, you agree to our Terms, Data Policy and Cookie Policy.</p>
-                </div>
-                
-                <div class="modal-footer">
-                    <%= f.submit "Sign Up", class:"btn btn-success btn-lg mx-auto" %>
-                </div>
-            <% end %>
-        </div>
-    </div>
 </div>
