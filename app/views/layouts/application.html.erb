@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Blogapp</title>
-        <%= favicon_link_tag %>
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <%= csrf_meta_tags %>
-        <%= csp_meta_tag %>
 
-        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-        <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-        <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    </head>
+<head>
+    <title>Blogapp</title>
+    <%= favicon_link_tag %>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
 
-    <body id="page-content"> 
-        <% if user_signed_in? %>
-            <%= render 'layouts/navbar' %>
-            <div class="container">
-                <%= render "layouts/notice" %>
-            </div>
-            
-            <div class="d-flex flex-row">            
-                <%= render 'layouts/verticalnav' %>
-                <div class="container">
-                    <%= yield %>
-                </div>
-                <%= render "layouts/messagenav" %>
-            </div>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+</head>
 
-        <% else %>
-                
-            <div class="container">
-                <%= render "layouts/notice" %>
-                <%= yield %>
-            </div>
-        <% end %>
-        <%= javascript_pack_tag 'animation' %>
-    </body>
+<body id="page-content">
+    <% if user_signed_in? %>
+    <%= render 'layouts/navbar' %>
+    <div class="container">
+        <%= render "layouts/notice" %>
+    </div>
+
+    <div class="d-flex flex-row">
+        <% render 'layouts/verticalnav' %>
+        <div class="container">
+            <%= yield %>
+        </div>
+        <% render "layouts/messagenav" %>
+    </div>
+
+    <% else %>
+
+    <div class="container">
+        <%= render "layouts/notice" %>
+        <%= yield %>
+    </div>
+    <% end %>
+
+    <%= javascript_pack_tag 'animation' %>
+</body>
+
 </html>

@@ -1,5 +1,9 @@
 @import 'bootstrap/dist/css/bootstrap';
 
+:root {
+    line-height: 2;
+}
+
 .text-decoration-none {
     color: black;
 }
@@ -12,8 +16,12 @@
     width: 45rem;
 }
 
-#blog-card {
-    width: 33rem;
+span {
+    line-height: 2;
+}
+
+small {
+    line-height: 2;
 }
 
 i {
