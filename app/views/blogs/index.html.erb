@@ -1,4 +1,4 @@
-<div class="card w-50 m-3 mx-auto" id="blog-card">
+<div class="card w-50 m-3 mx-auto">
     <div class="card-body">
         <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Post something" data-bs-toggle="modal" data-bs-target="#createBlogModal" readonly>
         <hr>
@@ -6,9 +6,9 @@
     </div>
 </div>
 
-<div class="row row-cols-3">
+<div class="row">
     <% @blogs.each do |blog| %>
-        <div class="col-4 mb-3">
+        <div class="col mb-3">
             <div class="card" id="blog-card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
@@ -30,19 +30,37 @@
                             </ul>
                         </div>
                     </div>
-                    <p><%= blog.blog_text %></p>
+
+                    <% if blog.blog_text.size > 600 || blog.blog_text.split.size > 200 %>
+                        <p>
+                            <%= blog.blog_text[0, 600]... %>
+                            <%= link_to "See more", blog %>
+                        </p>
+                    <% else %>
+                        <p><%= blog.blog_text %></p>
+                    <% end %>
                 </div>
+                
                 <div class="card-footer">
                     <div class="btn-group btn-group-sm" role="group">
                         <button type="button" class="btn btn-outline-primary">Like</button>
                         <button type="button" class="btn btn-outline-primary">Dislike</button>
                     </div>
+                    <button class="btn btn-outline-primary btn-sm">Comment</button>
                     <small class="card-subtitle text-muted"><%= time_ago_in_words(blog.created_at) %></small>
                 </div>
             </div>
         </div>
     <% end %>
-</div>
+    <div class="col sticky-top">
+        <div class="card border-success mb-3" style="max-width: 24rem;">
+            <div class="card-header">Header</div>
+            <div class="card-body text-success">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="createBlogModal" tabindex="-1" aria-labelledby="createBlogModalLabel" aria-hidden="true">
