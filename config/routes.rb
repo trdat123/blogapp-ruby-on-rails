@@ -3,11 +3,15 @@ Rails.application.routes.draw do
         sessions: "users/sessions", registrations: "users/registrations"
     }
 
-    resources :blogs
+    resources :blogs do
+        resources :likes
+        resources :comments
+    end
+
     root 'home#index'
     #get 'home/index'
 
     devise_scope :user do
         get '/users/sign_out' => 'devise/sessions#destroy'
-      end
+    end
 end

@@ -57,3 +57,5 @@ gem 'solargraph', group: :development
 gem 'devise', '~> 4.7', '>= 4.7.3'
 
 gem 'prettier'
+
+gem 'simple_form'

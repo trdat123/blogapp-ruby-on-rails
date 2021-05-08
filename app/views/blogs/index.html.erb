@@ -6,8 +6,8 @@
     </div>
 </div>
 
-<div class="row">
-    <% @blogs.each do |blog| %>
+<div class="row align-items-start">
+    <% @blogs.reverse_each do |blog| %>
         <div class="col mb-3">
             <div class="card" id="blog-card">
                 <div class="card-body">
@@ -21,63 +21,34 @@
                                 <li>
                                     <%= link_to "Show post", blog, class:"dropdown-item" %>
                                 </li>
-                                <li>
-                                    <%= link_to "Edit post", edit_blog_path(blog), class:"dropdown-item" %>
-                                </li>
-                                <li>
-                                    <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"dropdown-item" %>
-                                </li>
+                                <% if current_user.id == blog.user_id %>
+                                    <li>
+                                        <%= link_to "Edit post", edit_blog_path(blog), class:"dropdown-item" %>
+                                    </li>
+                                    <li>
+                                        <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"dropdown-item" %>
+                                    </li>
+                                <% end %>
                             </ul>
                         </div>
                     </div>
 
-                    <% if blog.blog_text.size > 600 || blog.blog_text.split.size > 200 %>
-                        <p>
-                            <%= blog.blog_text[0, 600]... %>
-                            <%= link_to "See more", blog %>
-                        </p>
-                    <% else %>
-                        <p><%= blog.blog_text %></p>
+                    <%= link_to blog do %>
+                        <div id="blog-text"><%= blog.blog_text %></div>    
                     <% end %>
+                    <%= blog.likes.count %> <%= blog.likes.count <= 1 ? 'like' : 'likes' %>
+                    <%= blog.comments.count %> comment
                 </div>
                 
-                <div class="card-footer">
-                    <div class="btn-group btn-group-sm" role="group">
-                        <button type="button" class="btn btn-outline-primary">Like</button>
-                        <button type="button" class="btn btn-outline-primary">Dislike</button>
-                    </div>
+                <div class="card-footer">     
                     <button class="btn btn-outline-primary btn-sm">Comment</button>
                     <small class="card-subtitle text-muted"><%= time_ago_in_words(blog.created_at) %></small>
                 </div>
             </div>
         </div>
     <% end %>
-    <div class="col sticky-top">
-        <div class="card border-success mb-3" style="max-width: 24rem;">
-            <div class="card-header">Header</div>
-            <div class="card-body text-success">
-                <h5 class="card-title">Success card title</h5>
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            </div>
-        </div>
-    </div>
+
+    <%= render "layouts/rightnav" %>
 </div>
 
-<div class="modal fade" id="createBlogModal" tabindex="-1" aria-labelledby="createBlogModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <%= form_for( @blog , remote: true, html: { class: "modal-content", role: "form" }, url: blogs_path) do |f| %>
-        <div class="modal-header">
-            <h5 class="modal-title" id="createBlogModalLabel">Create a blog</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <%= f.text_area :blog_text, class:"form-control" %>
-        </div>
-        <div class="modal-footer">
-            <div class="action">
-                <%= f.submit %>
-            </div>
-        </div>
-        <% end %>
-    </div>
-</div>
+<%= render "blogs/modal" %>

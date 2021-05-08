@@ -6,6 +6,8 @@ class User < ApplicationRecord
             :recoverable, :rememberable, :validatable
 
     has_many :blogs
+    has_many :likes, dependent: :destroy
+    has_many :comments, dependent: :destroy
 
     validates :username, presence: :true, uniqueness: { case_sensitive: false }
 end

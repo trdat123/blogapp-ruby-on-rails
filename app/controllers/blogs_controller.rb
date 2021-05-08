@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
     before_action :set_blog, only: %i[ show edit update destroy ]
-    before_action :correct_user, only: %i[ show edit update destroy ]
+    before_action :correct_user, only: %i[ edit update destroy ]
     skip_before_action :verify_authenticity_token
 
     # GET /blogs or /blogs.json
@@ -64,7 +64,6 @@ class BlogsController < ApplicationController
         @blog = current_user.blogs.find_by(id: params[:id])
         redirect_to blogs_path if @blog.nil?
     end
-    
 
     private
         # Use callbacks to share common setup or constraints between actions.
