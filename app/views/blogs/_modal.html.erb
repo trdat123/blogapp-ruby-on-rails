@@ -1,15 +1,16 @@
-<div class="modal fade" id="createBlogModal" tabindex="-1" aria-labelledby="createBlogModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <%= form_for( @blog , remote: true, html: { class: "modal-content", role: "form" }, url: blogs_path) do |f| %>
+<div class="modal" id="createBlogModal" tabindex="-1" aria-labelledby="createBlogModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <%= form_for( @blog , remote: true, html: { class: "modal-content", role: "form" }, url: blogs_path, remote: true) do |f| %>
             <div class="modal-header">
                 <h5 class="modal-title" id="createBlogModalLabel">Create a blog</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <%= f.text_area :blog_text, class:"form-control" %>
+                <%= f.text_field :title, class:"form-control mb-3", placeholder:"Enter the title" %>
+                <%= f.text_area :blog_text, rows: 10, class:"form-control", placeholder:"Description" %>
             </div>
             <div class="modal-footer">
-                <%= f.submit %>
+                <%= f.submit "Post", class:"btn btn-success" %>
             </div>
         <% end %>
     </div>

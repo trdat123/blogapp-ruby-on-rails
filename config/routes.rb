@@ -8,7 +8,7 @@ Rails.application.routes.draw do
         resources :comments
     end
 
-    root 'home#index'
+    root 'blogs#index'
     #get 'home/index'
 
     devise_scope :user do

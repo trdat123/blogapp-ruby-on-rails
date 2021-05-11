@@ -18,7 +18,7 @@
 
 #blog-card {
     min-height: 10rem;
-    width: 40rem;
+    max-width: 40rem;
 }
 
 span {
@@ -71,3 +71,8 @@ i {
     color: black;
     text-decoration: none;
 }
+
+#comment-container {
+    width: 40rem;
+}
+

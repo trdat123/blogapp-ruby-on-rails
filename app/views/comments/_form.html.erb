@@ -1,6 +1,6 @@
 <%= form_with(model: [@blog, @blog.comments.create]) do |f| %>
     <div class="form-group">
-        <%= f.text_area :body, class:"form-control" %>
-        <%= f.submit "Submit", class:"btn btn-success" %>
+        <%= f.text_area :body, class:"form-control", placeholder:"Enter a comment" %>
+        <%= f.submit "Submit", class:"btn btn-success mt-3" %>
     </div>
 <% end %>

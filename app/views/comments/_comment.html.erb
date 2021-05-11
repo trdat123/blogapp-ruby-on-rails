@@ -1,3 +1,13 @@
-<%= comment.body %>
-
-<%= link_to 'Delete', [comment.blog, comment], method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="card my-1">
+    <div class="card-body">
+        <p class="h5">
+            <span class="badge bg-secondary"><%= comment.user.inspect %>:</span>
+        </p>
+        <p>
+            <%= comment.body %>
+        </p>
+        <% if current_user = comment.user %>
+            <%= link_to 'Delete comment', [comment.blog, comment], method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-sm ms-auto" %> 
+        <% end %>
+    </div>
+</div>

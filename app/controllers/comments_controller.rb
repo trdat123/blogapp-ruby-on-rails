@@ -1,14 +1,15 @@
 class CommentsController < ApplicationController
+    before_action :find_comment, only: :destroy
 
     def create
         @blog = Blog.all.find(params[:blog_id])
-        @comment = @blog.comments.create(params.require(:comment).permit(:body))
+        @comment = @blog.comments.create(comment_params)
+        @comment.user = current_user
+        @comment.save
         redirect_to @blog
     end
 
     def destroy
-        @blog = Blog.find(params[:blog_id])
-        @comment = @blog.comments.find(params[:id])
         @comment.destroy
         redirect_to blog_path(@blog)
     end

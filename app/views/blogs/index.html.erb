@@ -1,15 +1,18 @@
-<div class="card w-50 m-3 mx-auto">
+<div class="card w-50 mt-3 mx-auto">
     <div class="card-body">
         <input type="text" class="form-control form-control-lg rounded-pill" placeholder="Post something" data-bs-toggle="modal" data-bs-target="#createBlogModal" readonly>
         <hr>
-        Picture
+        <div class="d-flex">
+            <button class="flex-fill btn btn-info mx-1 px-1" type="button" disabled>Post picture</button>
+            <button class="flex-fill btn btn-warning mx-1 px-1" type="button" disabled>other</button>
+        </div>
     </div>
 </div>
 
-<div class="row align-items-start">
-    <% @blogs.reverse_each do |blog| %>
-        <div class="col mb-3">
-            <div class="card" id="blog-card">
+<div class="row">
+    <div class="col-lg-7 mt-3">
+        <% @blogs.reverse_each do |blog| %>
+            <div class="card mb-3" id="blog-card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
                         <span class="h5"><%= blog.user.username %></span>
@@ -22,31 +25,51 @@
                                     <%= link_to "Show post", blog, class:"dropdown-item" %>
                                 </li>
                                 <% if current_user.id == blog.user_id %>
-                                    <li>
-                                        <%= link_to "Edit post", edit_blog_path(blog), class:"dropdown-item" %>
-                                    </li>
-                                    <li>
-                                        <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"dropdown-item" %>
-                                    </li>
+                                <li>
+                                    <%= link_to "Edit post", edit_blog_path(blog), class:"dropdown-item" %>
+                                </li>
+                                <li>
+                                    <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"dropdown-item" %>
+                                </li>
                                 <% end %>
                             </ul>
                         </div>
                     </div>
 
-                    <%= link_to blog do %>
-                        <div id="blog-text"><%= blog.blog_text %></div>    
-                    <% end %>
-                    <%= blog.likes.count %> <%= blog.likes.count <= 1 ? 'like' : 'likes' %>
-                    <%= blog.comments.count %> comment
+                    <p class="fw-bold text-decoration-none"><%= blog.title %></p>
+                    <p id="blog-text">
+                        <%= blog.blog_text[0, 600] %>
+                        <% if blog.blog_text.length > 600 %>
+                        <%= link_to "...see more", blog, class:"text-decoration-none text-primary" %>
+                        <% end %>
+                    </p>
+
+                    <div class="d-flex justify-content-center">
+                        <%= link_to "Show post", blog, class:"btn btn-primary mx-1" %>
+                        <% if current_user == blog.user %>
+                        <%= link_to "Edit post", edit_blog_path(blog), class:"btn btn-success mx-1" %>
+                        <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"btn btn-danger mx-1" %>
+                        <% end %>
+                    </div>
                 </div>
-                
-                <div class="card-footer">     
-                    <button class="btn btn-outline-primary btn-sm">Comment</button>
-                    <small class="card-subtitle text-muted"><%= time_ago_in_words(blog.created_at) %></small>
+
+                <div class="card-footer d-flex">
+                    <span class="badge bg-warning text-dark mx-1">
+                        <%= blog.likes.count %> <%= blog.likes.count <= 1 ? 'like' : 'likes' %>
+                    </span>
+                    <span class="badge bg-info text-dark mx-1">
+                        <%= pluralize(blog.comments.count, 'comment') %>
+                    </span>
+                    <div class="ms-auto">
+                        <small class="card-subtitle text-muted">created <%= time_ago_in_words(blog.created_at) %> ago</small>
+                        <% if blog.updated_at && blog.updated_at != blog.created_at %>
+                        <small class="card-subtitle text-muted">| updated <%= time_ago_in_words(blog.updated_at) %> ago</small>
+                        <% end %>
+                    </div>
                 </div>
             </div>
-        </div>
-    <% end %>
+        <% end %>
+    </div>
 
     <%= render "layouts/rightnav" %>
 </div>
