@@ -3,7 +3,8 @@
         <div class="card my-3" id="blog-card">
             <div class="card-body">
                 <div class="d-flex flex-row">
-                    <span class="h5"><%= @blog.user.username %></span>
+                    <h4><span class="badge bg-secondary"><%= @blog.user.username %></span></h4>
+
                     <div class="dropdown d-inline-flex ms-auto">
                         <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-three-dots-vertical"></i>
@@ -21,16 +22,31 @@
                     </div>
                 </div>
 
-                <%= @blog.blog_text %>
+                <h5 class="card-title text-center"><%= @blog.title %></h5>
+                <p><%= @blog.blog_text %></p>
             </div>
 
-            <div class="card-footer">
+            <div class="card-footer d-flex">
                 <% liked = @blog.likes.find { |like| like.user_id == current_user.id} %>
                 <% if liked %>
-                    <%= button_to 'Unlike', blog_like_path(@blog, liked), method: :delete, class:"btn btn-success" %>
+                    <%= link_to '<i class="bi bi-heart-fill"></i> Liked'.html_safe, blog_like_path(@blog, liked), method: :delete, class:"btn btn-outline-success btn-sm align-top" %>
                 <% else %>
-                    <%= button_to 'Like', blog_likes_path(@blog), method: :post, class:"btn btn-success" %>
+                    <%= link_to '<i class="bi bi-heart"></i> Unliked'.html_safe, blog_likes_path(@blog), method: :post, class:"btn btn-outline-success btn-sm align-top" %>
                 <% end %>
+
+                <h5 class="badge bg-warning text-dark mx-1 mt-1">
+                    <%= @blog.likes.count %> <%= @blog.likes.count <= 1 ? 'like' : 'likes' %>
+                </h5>
+                <h5 class="badge bg-info text-dark mx-1 mt-1">
+                    <%= pluralize(@blog.comments.count, 'comment') %>
+                </h5>
+
+                <div class="ms-auto">
+                    <small class="card-subtitle text-muted">created <%= time_ago_in_words(@blog.created_at) %> ago</small>
+                    <% if @blog.updated_at != @blog.created_at %>
+                        <small class="card-subtitle text-muted">| updated <%= time_ago_in_words(@blog.updated_at) %> ago</small>
+                    <% end %>
+                </div>
             </div>
         </div>
 
@@ -40,6 +56,7 @@
             <%= render "comments/form" %>
             <hr>
             <%= render @blog.comments %>
+            
         </div>
     </div>
 

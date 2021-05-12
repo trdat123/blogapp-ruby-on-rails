@@ -15,7 +15,7 @@
             <div class="card mb-3" id="blog-card">
                 <div class="card-body">
                     <div class="d-flex flex-row">
-                        <span class="h5"><%= blog.user.username %></span>
+                        <h4><span class="badge bg-secondary"><%= blog.user.username %></span></h4>
                         <div class="dropdown d-inline-flex ms-auto">
                             <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="bi bi-three-dots-vertical"></i>
@@ -36,34 +36,34 @@
                         </div>
                     </div>
 
-                    <p class="fw-bold text-decoration-none"><%= blog.title %></p>
+                    <h5 class="card-title text-center"><%= blog.title %></h5>
                     <p id="blog-text">
                         <%= blog.blog_text[0, 600] %>
                         <% if blog.blog_text.length > 600 %>
-                        <%= link_to "...see more", blog, class:"text-decoration-none text-primary" %>
+                            <%= link_to "...see more", blog, class:"text-decoration-none text-primary" %>
                         <% end %>
                     </p>
 
                     <div class="d-flex justify-content-center">
                         <%= link_to "Show post", blog, class:"btn btn-primary mx-1" %>
                         <% if current_user == blog.user %>
-                        <%= link_to "Edit post", edit_blog_path(blog), class:"btn btn-success mx-1" %>
-                        <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"btn btn-danger mx-1" %>
+                            <%= link_to "Edit post", edit_blog_path(blog), class:"btn btn-success mx-1" %>
+                            <%= button_to "Delete post", blog, method: :delete, data: { confirm: 'Are you sure you want to delete this post?' }, class:"btn btn-danger mx-1" %>
                         <% end %>
                     </div>
                 </div>
 
                 <div class="card-footer d-flex">
-                    <span class="badge bg-warning text-dark mx-1">
+                    <h5 class="badge bg-warning text-dark mx-1 mt-1">
                         <%= blog.likes.count %> <%= blog.likes.count <= 1 ? 'like' : 'likes' %>
-                    </span>
-                    <span class="badge bg-info text-dark mx-1">
+                    </h5>
+                    <h5 class="badge bg-info text-dark mx-1 mt-1">
                         <%= pluralize(blog.comments.count, 'comment') %>
-                    </span>
+                    </h5>
                     <div class="ms-auto">
                         <small class="card-subtitle text-muted">created <%= time_ago_in_words(blog.created_at) %> ago</small>
                         <% if blog.updated_at && blog.updated_at != blog.created_at %>
-                        <small class="card-subtitle text-muted">| updated <%= time_ago_in_words(blog.updated_at) %> ago</small>
+                            <small class="card-subtitle text-muted">| updated <%= time_ago_in_words(blog.updated_at) %> ago</small>
                         <% end %>
                     </div>
                 </div>

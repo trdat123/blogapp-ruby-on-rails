@@ -22,11 +22,11 @@
 }
 
 span {
-    line-height: 2;
+    margin-bottom: 0;
 }
 
 small {
-    line-height: 2;
+    line-height: 2.5;
 }
 
 i {
@@ -76,3 +76,7 @@ i {
     width: 40rem;
 }
 
+.card-body {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}

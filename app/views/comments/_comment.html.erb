@@ -1,13 +1,28 @@
-<div class="card my-1">
+<div class="card my-2">
     <div class="card-body">
-        <p class="h5">
-            <span class="badge bg-secondary"><%= comment.user.inspect %>:</span>
-        </p>
-        <p>
-            <%= comment.body %>
-        </p>
-        <% if current_user = comment.user %>
-            <%= link_to 'Delete comment', [comment.blog, comment], method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-sm ms-auto" %> 
-        <% end %>
+        <div class="d-flex flex-row">
+            <p class="h5">
+                <span class="badge bg-secondary"><%= comment.user.username if comment.user %>:</span>
+            </p>
+
+            <small class="card-subtitle text-muted mx-1">
+                <%= time_ago_in_words(comment.created_at) if comment.created_at %> ago
+            </small>
+
+            <div class="dropdown ms-auto">
+                <button class="btn btn-light btn-sm" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-three-dots-vertical"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton1">
+                    <li>
+                        <% if comment.user == current_user %>
+                            <%= link_to 'Delete comment', [comment.blog, comment], method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-danger btn-sm text-wrap" %> 
+                        <% end %>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+        <p><%= comment.body %></p>
     </div>
 </div>

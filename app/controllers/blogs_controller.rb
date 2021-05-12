@@ -11,6 +11,8 @@ class BlogsController < ApplicationController
 
     # GET /blogs/1 or /blogs/1.json
     def show
+        @blog.comments.order("created_at DESC")
+        
     end
 
     # GET /blogs/new
@@ -73,6 +75,6 @@ class BlogsController < ApplicationController
 
         # Only allow a list of trusted parameters through.
         def blog_params
-            params.require(:blog).permit(:blog_text)
+            params.require(:blog).permit(:title, :blog_text)
         end
 end
